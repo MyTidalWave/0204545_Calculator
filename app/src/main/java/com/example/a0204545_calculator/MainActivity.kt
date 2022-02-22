@@ -1,18 +1,26 @@
 package com.example.a0204545_calculator
 
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
+import java.util.*
+import org.mariuszgromada.math.mxparser.*
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.text.buildSpannedString
+import android.text.SpannableStringBuilder
 
+private const val TAG = "MyActivity"
 
 class MainActivity : AppCompatActivity() {
+
+
     lateinit var display: EditText
 
-    private fun AddString(str: String){
+    fun addString(str: String){
         var oldStr:String = display.text.toString()
         var cursorPos:Int = display.selectionStart
         var leftStr:String = oldStr.substring(0, cursorPos)
@@ -70,52 +78,52 @@ class MainActivity : AppCompatActivity() {
         //Number OnClickListeners
         zeroBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("0")
+                addString("0")
             }
         })
         oneBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("1")
+                addString("1")
             }
         })
         twoBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("2")
+                addString("2")
             }
         })
         threeBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("3")
+                addString("3")
             }
         })
         fourBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("4")
+                addString("4")
             }
         })
         fiveBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("5")
+                addString("5")
             }
         })
         sixBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("6")
+                addString("6")
             }
         })
         sevenBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("7")
+                addString("7")
             }
         })
         eightBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("8")
+                addString("8")
             }
         })
         nineBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("9")
+                addString("9")
             }
         })
 
@@ -129,52 +137,98 @@ class MainActivity : AppCompatActivity() {
         })
         exponentBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("^")
+                addString("^")
             }
         })
         parenthesesBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("(")
+                var cursorPos:Int = display.selectionStart
+                var openPar:Int = 0
+                var closedPar:Int = 0
+                var texLen:Int = display.text.length
+
+                for(i in 0 until cursorPos)
+                {
+                    if(display.text.toString().substring(i, i+1) == "("){
+                        openPar += 1
+                    }
+                    if(display.text.toString().substring(i, i+1) == ")"){
+                        closedPar += 1
+                    }
+                }
+
+                if(openPar == closedPar || display.text.toString().substring(texLen-1, texLen) == "(")
+                {
+                    addString("(")
+                }
+                else if(closedPar < openPar && display.text.toString().substring(texLen-1, texLen) != "(")
+                {
+                    addString(")")
+                }
+                display.setSelection(cursorPos + 1)
+
             }
         })
         divideBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("÷")
+                addString("÷")
             }
         })
         multiplyBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("×")
+                addString("×")
             }
         })
         addBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("+")
+                addString("+")
             }
         })
         subtractBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("-")
+                addString("-")
             }
         })
         plusMinusBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("+/-")
+                addString("+/-")
             }
         })
         pointBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString(".")
+                addString(".")
             }
         })
         equalsBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("=")
+                var lol:Int = 69
+                var lmao:String = lol.toString()
+                var userExp:String = display.text.toString()
+
+                userExp = userExp.replace("÷","/")
+                userExp = userExp.replace("×","*")
+
+                //var exp = Expression(userExp)
+                var exp:Expression = Expression(userExp)
+
+                var result:String = exp.calculate().toString()
+
+                display.setText(result)
+                display.setSelection(result.length)
+
             }
         })
         backspaceBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                AddString("<-")
+                var cursorPos:Int = display.selectionStart
+                var textLen:Int = display.text.length
+
+                if(cursorPos != 0 && textLen != 0){
+                    var selection:SpannableStringBuilder = display.text as SpannableStringBuilder
+                    selection.replace(cursorPos-1,cursorPos,"")
+                    display.setText(selection)
+                    display.setSelection(cursorPos - 1)
+                }
             }
         })
 
