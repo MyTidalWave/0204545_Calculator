@@ -9,7 +9,7 @@
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -287,17 +287,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:autofillHints="false"
+        android:focusable="false"
+        android:inputType="none"
         android:text="@string/display"
+        android:textAlignment="textEnd"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="false"
-        android:inputType="none"
-        android:textSize="36sp"
-        android:textAlignment="textEnd"
-        tools:ignore="LabelFor"
-        android:focusable="false"/>
+        tools:ignore="LabelFor" />
 
     <ImageButton
         android:id="@+id/backspaceBTN"

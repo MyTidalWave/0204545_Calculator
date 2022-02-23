@@ -12,8 +12,11 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.text.buildSpannedString
 import android.text.SpannableStringBuilder
+import android.util.Log
 
-private const val TAG = "MyActivity"
+private val TAG = "MainActivity"
+private val TEXT= "TEXT_CONTENT"
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -191,7 +194,19 @@ class MainActivity : AppCompatActivity() {
         })
         plusMinusBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                addString("+/-")
+                //addString("+/-")
+                var cursorPos:Int = display.selectionStart
+                var textLen:Int = display.text.length
+                var minus:String = "-"
+
+                if(cursorPos != 0 && textLen != 0){
+                    //var selection:SpannableStringBuilder = display.text as SpannableStringBuilder
+                    //selection.replace(cursorPos-1,cursorPos,"")
+                    //display.setText(selection)
+                    //display.setSelection(cursorPos - 1)
+                    display.setText(minus + display.text )
+                    display.setSelection(cursorPos + 1)
+                }
             }
         })
         pointBTN.setOnClickListener(object: View.OnClickListener {
@@ -201,8 +216,6 @@ class MainActivity : AppCompatActivity() {
         })
         equalsBTN.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
-                var lol:Int = 69
-                var lmao:String = lol.toString()
                 var userExp:String = display.text.toString()
 
                 userExp = userExp.replace("÷","/")
@@ -223,6 +236,7 @@ class MainActivity : AppCompatActivity() {
                 var cursorPos:Int = display.selectionStart
                 var textLen:Int = display.text.length
 
+
                 if(cursorPos != 0 && textLen != 0){
                     var selection:SpannableStringBuilder = display.text as SpannableStringBuilder
                     selection.replace(cursorPos-1,cursorPos,"")
@@ -234,6 +248,49 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onStart() {
+        Log.d(TAG, "onStart")
+        super.onStart()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        Log.d(TAG, "onRestoreInstanceState")
+        super.onRestoreInstanceState(savedInstanceState)
+        //val savedString = savedInstanceState.getString(TEXT)
+        //display?.setText(savedString)
+    }
+
+    override fun onResume() {
+        Log.d(TAG, "onResume")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.d(TAG, "onPause")
+        super.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.d(TAG, "onSaveInstanceState")
+        super.onSaveInstanceState(outState)
+        //outState.putString(TEXT, display?.text.toString())
+    }
+
+    override fun onStop() {
+        Log.d(TAG, "onStop")
+        super.onStop()
+    }
+
+    override fun onRestart() {
+        Log.d(TAG, "onRestart")
+        super.onRestart()
+    }
+
+    override fun onDestroy() {
+        Log.d(TAG, "onDestroy")
+        super.onDestroy()
     }
 
 }
